@@ -26,7 +26,7 @@ def index():
 def get_tasks():
     return jsonify({'tasks': tasks})
 
-@app.route('/todo/api/v1/task/<int:task_id>', methods=['GET'])
+@app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
