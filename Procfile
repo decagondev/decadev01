@@ -1,0 +1,1 @@
+web: gunicorn decadev01:app
