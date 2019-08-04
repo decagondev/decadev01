@@ -1,5 +1,5 @@
 #!flask/bin/python
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, make_response, request
 
 app = Flask(__name__)
 
@@ -18,6 +18,8 @@ tasks = [
     }
 ]
 
+# Get Requests
+
 @app.route('/')
 def index():
     return "<h1>Welcome to my New Flask App</h1>"
@@ -33,6 +35,30 @@ def get_task(task_id):
         abort(404)
     return jsonify({'task': task[0]})
 
-    @app.errorhandler(404)
-    def not_found(error):
-        return make_response(jsonify({'error': 'Not Found'}), 404)
+
+# Post Requests
+@app.route('/todo/api/v1/tasks', methods=['POST'])
+def create_task():
+    if not request.json or not 'title' in request.json:
+        abort(400)
+    
+    task = {
+        'id': tasks[-1]['id'] + 1,
+        'title': request.json['title'],
+        'description': request.json.get('description', ""),
+        'done': False
+    }
+    tasks.append(task)
+    return jsonify({'tasl': task}), 201
+
+
+
+# Error Handling
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not Found'}), 404)
+
+@app.errorhandler(400)
+def not_found(error):
+    return make_response(jsonify({'error': 'Bad Request'}), 400)
