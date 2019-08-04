@@ -31,4 +31,4 @@ def get_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
         abort(404)
-    return jsonyfy({'task': task[0]})
+    return jsonify({'task': task[0]})
