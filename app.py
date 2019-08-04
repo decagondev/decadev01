@@ -20,7 +20,7 @@ tasks = [
 
 @app.route('/')
 def index():
-    return "Hello, World!"
+    return "<h1>Welcome to my New Flask App</h1>"
 
 @app.route('/todo/api/v1/tasks', methods=['GET'])
 def get_tasks():
